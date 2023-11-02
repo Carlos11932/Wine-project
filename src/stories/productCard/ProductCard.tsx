@@ -12,6 +12,8 @@ import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Avatar from '@mui/material/Avatar';
+import styles from '../styles/styles.module.css'
+import { useState } from 'react';
 
 
 
@@ -42,6 +44,11 @@ export interface ProductCardProps {
 
 export const ProductCard = ({ cardHeight, flag, title, subheader, image, description, tastingNotes }: ProductCardProps) => {
   const [expanded, setExpanded] = React.useState(false);
+  const [ counter, setCounter ] = useState(0)
+
+  const increaseBy = (value: number) => {
+    setCounter( prev => Math.max( prev + value, 0))
+  }
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -75,6 +82,17 @@ export const ProductCard = ({ cardHeight, flag, title, subheader, image, descrip
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
+      <div className={ styles.buttonsContainer }>
+            <button
+                className={ styles.buttonMinus }
+                onClick={ () => increaseBy( -1 ) }> - </button>
+
+            <div className={ styles.countLabel }> { counter } </div>
+
+            <button
+                className={ styles.buttonAdd }
+                onClick={ () => increaseBy( +1 ) }> + </button>
+        </div>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>
